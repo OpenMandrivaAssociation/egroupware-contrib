@@ -2,9 +2,9 @@
 %define	Name	eGroupWare-contrib
 %define egw	egroupware
 %define wwwdir	%{_var}/www/%{egw}
-%define	version	1.2.106
-%define	Version	1.2.106-2
-%define	release	%mkrel 2
+%define	version	1.2.107
+%define	Version	1.2.107-2
+%define	release	%mkrel 1
 %define order	71
 
 Name:		%{name}
@@ -19,7 +19,7 @@ Source1:	%{egw}-fudforum-apache.conf
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):  apache-conf >= 2.0.54
-Requires(pre):  apache-mpm-prefork >= 2.0.54
+Requires(pre):  apache-mpm >= 2.0.54
 Requires:	apache-mod_php php-xml php-gd
 BuildArch:	noarch
 BuildRequires:	file
