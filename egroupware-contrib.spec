@@ -23,7 +23,6 @@ Requires(pre):  apache-mpm >= 2.0.54
 Requires:	apache-mod_php php-xml php-gd
 BuildArch:	noarch
 BuildRequires:	file
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. 
