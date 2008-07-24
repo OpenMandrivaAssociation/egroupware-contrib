@@ -4,7 +4,7 @@
 %define wwwdir	%{_var}/www/%{egw}
 %define	version	1.2.107
 %define	Version	1.2.107-2
-%define	release	%mkrel 1
+%define	release	%mkrel 3
 %define order	71
 
 Name:		%{name}
