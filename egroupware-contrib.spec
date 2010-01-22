@@ -4,32 +4,34 @@
 %define wwwdir	%{_var}/www/%{egw}
 %define	version	1.2.107
 %define	Version	1.2.107-2
-%define	release	%mkrel 4
+%define	release	%mkrel 5
 %define order	71
 
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Summary:	Contrib modules for egroupware suite
-License:	GPL
+License:	GPL+
 Group:		System/Servers
 URL:		http://www.egroupware.org/
 Source0:	%{Name}-%{Version}.tar.bz2
 Source1:	%{egw}-fudforum-apache.conf
-Requires(pre): rpm-helper
-Requires(postun): rpm-helper
+
+Requires(pre):		rpm-helper
+Requires(postun): 	rpm-helper
+
 Requires(pre):  apache-conf >= 2.0.54
 Requires(pre):  apache-mpm >= 2.0.54
-Requires:	apache-mod_php php-xml php-gd
+Requires:	apache-mod_php
+Requires:	php-xml
+Requires:	php-gd
 BuildArch:	noarch
 BuildRequires:	file
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
-eGroupWare is a web-based groupware suite written in PHP. 
-The core package provides the admin, setup, phpgwapi and preferences
-packages. It also provides an API for developing additional applications. 
-See the egroupware apps project for add-on apps.
+eGroupWare is a web-based groupware suite written in PHP. This -contrib 
+package provides unsupported (and often obsolete and broken) plugins.
 
 %package backup
 Summary:	The eGroupWare backup application
@@ -68,14 +70,6 @@ Provides:	egroupware-comic
 
 %description comic
 This application display comic strips.
-
-%package egwical
-Summary:	The eGroupWare egwical application
-Group:		System/Servers
-Requires:	%{egw} >= %{version}-%{release}
-
-%description egwical
-egwical application
 
 %package email
 Summary:	The eGroupWare email application
@@ -137,14 +131,6 @@ Provides:	egroupware-headlines
 %description headlines
 This is the headlines app for eGroupWare.
 
-%package icalsrv
-Summary:	The eGroupWare icalsrv application
-Group:		System/Servers
-Requires:	%{egw} >= %{version}-%{release}
-
-%description icalsrv
-This is the icalsrv app for eGroupWare.
-
 %package jinn
 Summary:	The eGroupWare jinn application
 Group:		System/Servers
@@ -165,16 +151,8 @@ Provides:	egroupware-messenger
 
 %description messenger
 This is the messenger app for eGroupWare.
-
-%package phpbrain
-Summary:	The eGroupWare phpbrain application
-Group:		System/Servers
-Requires:	%{name}-addressbook = %{version}-%{release}
-Obsoletes:	egroupware-phpbrain
+bsoletes:	egroupware-phpbrain
 Provides:	egroupware-phpbrain
-
-%description phpbrain
-This is the phpbrain app for eGroupWare.
 
 %package phpldapadmin
 Summary:	The eGroupWare phpldapadmin application
@@ -195,16 +173,6 @@ Provides:	egroupware-projects
 
 %description projects
 This is the projects app for eGroupWare.
-
-%package registration
-Summary:	The eGroupWare registration application
-Group:		System/Servers
-Requires:	%{egw} >= %{version}-%{release}
-Obsoletes:	egroupware-registration
-Provides:	egroupware-registration
-
-%description registration
-This is the registration app for eGroupWare.
 
 %package skel
 Summary:        The eGroupWare skel application
@@ -335,11 +303,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc comic/doc/*
 %{wwwdir}/comic
 
-%files egwical
-%defattr(-,root,root)
-%doc egwical/doc/*
-%{wwwdir}/egwical
-
 %files email
 %defattr(-,root,root)
 %doc email/addressbook-js.changelog.txt email/doc/*
@@ -368,11 +331,6 @@ rm -rf $RPM_BUILD_ROOT
 %files headlines
 %defattr(-,root,root)
 %{wwwdir}/headlines
-
-%files icalsrv
-%defattr(-,root,root)
-%doc icalsrv/doc/*
-%{wwwdir}/icalsrv
 
 %files jinn
 %defattr(-,root,root)
@@ -423,5 +381,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc xmlrpc/NOTE xmlrpc/doc/*
 %{wwwdir}/xmlrpc
-
-
