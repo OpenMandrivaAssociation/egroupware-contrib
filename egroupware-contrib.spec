@@ -244,6 +244,9 @@ find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 # delete duplicate fonts
 find . -type d -name ttf-bitstream-vera-1.10|xargs rm -rf
 
+# remove egwical and icalsrv (they're in the main package now)
+rm -rf egwical/ icalsrv/
+
 %build
 
 %install
