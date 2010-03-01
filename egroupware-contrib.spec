@@ -4,8 +4,7 @@
 %define wwwdir	%{_var}/www/%{egw}
 %define	version	1.2.107
 %define	Version	1.2.107-2
-%define	release	%mkrel 5
-%define order	71
+%define	release	%mkrel 6
 
 Name:		%{name}
 Version:	%{version}
@@ -15,19 +14,15 @@ License:	GPL+
 Group:		System/Servers
 URL:		http://www.egroupware.org/
 Source0:	%{Name}-%{Version}.tar.bz2
-Source1:	%{egw}-fudforum-apache.conf
-
-Requires(pre):		rpm-helper
-Requires(postun): 	rpm-helper
-
-Requires(pre):  apache-conf >= 2.0.54
-Requires(pre):  apache-mpm >= 2.0.54
+%if %mdkversion < 201010
+Requires(post):   rpm-helper
+Requires(postun):   rpm-helper
+%endif
 Requires:	apache-mod_php
 Requires:	php-xml
 Requires:	php-gd
 BuildArch:	noarch
-BuildRequires:	file
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. This -contrib 
@@ -237,9 +232,6 @@ find . -type f -empty | xargs rm -f
 find . -type f | xargs chmod 644
 find . -name .svn | xargs rm -rf
 
-# strip away annoying ^M
-find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
-find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 
 # delete duplicate fonts
 find . -type d -name ttf-bitstream-vera-1.10|xargs rm -rf
@@ -250,42 +242,91 @@ rm -rf egwical/ icalsrv/
 %build
 
 %install
-rm -rf  $RPM_BUILD_ROOT
+rm -rf  %{buildroot}
 
 # install files
-install -d -m 755 $RPM_BUILD_ROOT%{wwwdir}
-cp -aRf * $RPM_BUILD_ROOT%{wwwdir}
+install -d -m 755 %{buildroot}%{wwwdir}
+cp -aRf * %{buildroot}%{wwwdir}
 
 # post-install cleanup
-rm -rf $RPM_BUILD_ROOT%{wwwdir}/doc 
-rm -rf $RPM_BUILD_ROOT%{wwwdir}/*/doc 
-rm -f $RPM_BUILD_ROOT%{wwwdir}/backup/README
-rm -f $RPM_BUILD_ROOT%{wwwdir}/felamimail/{COPYING,Changelog,README,TODO}
-rm -f $RPM_BUILD_ROOT%{wwwdir}/jinn/{CHANGELOG,COPYING,INSTALL,LICENSE,README,TODO}
-rm -f $RPM_BUILD_ROOT%{wwwdir}/phpldapadmin/{INSTALL,LICENSE,VERSION}
-rm -rf $RPM_BUILD_ROOT%{wwwdir}/infolog/debian
-rm -rf $RPM_BUILD_ROOT%{wwwdir}/jinn/quixplorer_2_3
+rm -rf %{buildroot}%{wwwdir}/doc 
+rm -rf %{buildroot}%{wwwdir}/*/doc 
+rm -f %{buildroot}%{wwwdir}/backup/README
+rm -f %{buildroot}%{wwwdir}/felamimail/{COPYING,Changelog,README,TODO}
+rm -f %{buildroot}%{wwwdir}/jinn/{CHANGELOG,COPYING,INSTALL,LICENSE,README,TODO}
+rm -f %{buildroot}%{wwwdir}/phpldapadmin/{INSTALL,LICENSE,VERSION}
+rm -rf %{buildroot}%{wwwdir}/infolog/debian
+rm -rf %{buildroot}%{wwwdir}/jinn/quixplorer_2_3
 # doc cleanup
 rm -f doc/Makefile
 rm -rf doc/rpm-build
 
 # remove .htaccess files
-find $RPM_BUILD_ROOT%{wwwdir} -name .htaccess -exec rm -f {} \;
+find %{buildroot}%{wwwdir} -name .htaccess -exec rm -f {} \;
 
 # modify shell bang for perl scripts
-find $RPM_BUILD_ROOT%{wwwdir} -name '*.pl' -exec perl -pi -e 's|/usr/local/bin/perl|/usr/bin/perl|g' {} \;
-find $RPM_BUILD_ROOT%{wwwdir} -name '*.py' -exec perl -pi -e 's|/usr/local/bin/python|/usr/bin/python|g' {} \;
+find %{buildroot}%{wwwdir} -name '*.pl' -exec perl -pi -e 's|/usr/local/bin/perl|/usr/bin/perl|g' {} \;
+find %{buildroot}%{wwwdir} -name '*.py' -exec perl -pi -e 's|/usr/local/bin/python|/usr/bin/python|g' {} \;
 
 # fix right on scripts
-find $RPM_BUILD_ROOT%{wwwdir} -name '*.pl' -exec chmod 755 {} \;
-find $RPM_BUILD_ROOT%{wwwdir} -name '*.py' -exec chmod 755 {} \;
+find %{buildroot}%{wwwdir} -name '*.pl' -exec chmod 755 {} \;
+find %{buildroot}%{wwwdir} -name '*.py' -exec chmod 755 {} \;
 
 # apache configuration for fudforum
-install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf/webapps.d
-install -m0644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf/webapps.d/%{order}_%{egw}-fudforum.conf
+install -d -m 755 %{buildroot}%{_webappconfdir}
+cat > %{buildroot}%{_webappconfdir}/%{egw}-fudforum.conf <<EOF
+<Directory /var/www/egroupware/fudforum/setup/base>
+    Deny from all
+</Directory>
+
+<Directory /var/www/egroupware/fudforum/setup/base/sql>
+    Deny from all
+</Directory>
+
+<Directory /var/www/egroupware/fudforum/setup/base/src>
+    Deny from all
+</Directory>
+
+<Directory /var/www/egroupware/fudforum/setup/base/thm>
+    Deny from all
+</Directory>
+
+<Directory /var/www/egroupware/fudforum/setup/base/cache>
+    Deny from all
+</Directory>
+
+<Directory /var/www/egroupware/fudforum/setup/base/scripts>
+    Deny from all
+</Directory>
+
+<Directory /var/www/egroupware/fudforum/setup/base/www_root>
+
+    php_admin_value output_buffering 16000
+    php_admin_value variables_order GPCS
+    php_admin_value implicit_flush 0
+    php_admin_value register_globals 0
+    php_admin_value register_argc_argv 0
+    php_admin_value magic_quotes_gpc 0
+    php_admin_value session.use_trans_sid 0
+</Directory>
+
+<Directory /var/www/egroupware/fudforum/setup/base/include>
+    Deny from all
+</Directory>
+EOF
+
+%post fudforum
+%if %mdkversion < 201010
+%_post_webapp
+%endif
+
+%postun fudforum
+%if %mdkversion < 201010
+%_postun_webapp
+%endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files backup
 %defattr(-,root,root)
@@ -329,7 +370,7 @@ rm -rf $RPM_BUILD_ROOT
 %files fudforum
 %defattr(-,root,root)
 %{wwwdir}/fudforum
-%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{order}_%{egw}-fudforum.conf
+%config(noreplace) %{_webappconfdir}/%{egw}-fudforum.conf
 
 %files headlines
 %defattr(-,root,root)
