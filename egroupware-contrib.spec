@@ -425,3 +425,79 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %doc xmlrpc/NOTE xmlrpc/doc/*
 %{wwwdir}/xmlrpc
+
+
+%changelog
+* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 1.2.107-7mdv2011.0
++ Revision: 610346
+- rebuild
+
+* Mon Mar 01 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1.2.107-6mdv2010.1
++ Revision: 513137
+- rely on filetrigger for reloading apache configuration begining with 2010.1, rpm-helper macros otherwise
+- use herein documents instead of external source for apache configuration
+- no need to prefix apache configuration file with an ordering number
+- spec cleanup
+
+* Fri Jan 22 2010 Adam Williamson <awilliamson@mandriva.org> 1.2.107-5mdv2010.1
++ Revision: 494871
+- remove egwical and icalsrv directories before %%install
+- drop modules that are in the main package now
+
+* Thu Sep 03 2009 Thierry Vignaud <tv@mandriva.org> 1.2.107-4mdv2010.0
++ Revision: 428535
+- rebuild
+
+* Thu Jul 24 2008 Thierry Vignaud <tv@mandriva.org> 1.2.107-3mdv2009.0
++ Revision: 244631
+- rebuild
+
+* Wed Jan 02 2008 Olivier Blin <oblin@mandriva.com> 1.2.107-1mdv2008.1
++ Revision: 140728
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Mon Jun 25 2007 Oden Eriksson <oeriksson@mandriva.com> 1.2.107-1mdv2008.0
++ Revision: 43801
+- 1.2.107-2
+- fix deps
+
+
+* Fri Mar 16 2007 Oden Eriksson <oeriksson@mandriva.com> 1.2.106-2mdv2007.1
++ Revision: 144976
+- 1.2.106-2 (bugfix and maintainance release)
+- bunzipped the apache config file
+- the changelog was present in the spec file for some reason
+
+* Tue Jan 02 2007 Anne Nicolas <anne.nicolas@mandriva.com> 1.2.106-1mdv2007.1
++ Revision: 103033
+- New version, security and bug fixes
+
+* Sun Aug 06 2006 Olivier Thauvin <nanardon@mandriva.org> 1.2.104-3mdv2007.0
++ Revision: 53312
+- rebuild
+- Import egroupware-contrib
+
+* Fri Jul 28 2006 Anne Nicolas <anne.nicolas@mandriva.com> 1.2.104-2mdk
+- fix duplicate fonts in projects
+
+* Fri Jul 21 2006 Anne Nicolas <anne.nicolas@mandriva.com> 1.2.104-1mdk
+- Bug fix
+
+* Mon Jun 12 2006 Anne Nicolas <anne.nicolas@mandriva.com> 1.2.102-1mdk
+- New version, lots of bug fix
+
+* Mon May 22 2006 Anne Nicolas <anne.nicolas@mandriva.com> 1.2-2.2mdk
+- delete .svn directories
+
+* Mon May 22 2006 Anne Nicolas <anne.nicolas@mandriva.com> 1.2-2.1mdk
+- new version, fix bugs
+
+* Wed Apr 26 2006 Olivier Thauvin <nanardon@mandriva.org> 1.2-1.2mdk
+- Fix typo: group and a require was on same line
+
+* Wed Oct 26 2005 Anne Nicolas <anne.nicolas@mandriva.com> 1.2-1.1mdk
+- new major version
+
