@@ -4,7 +4,7 @@
 %define wwwdir	%{_var}/www/%{egw}
 %define	version	1.2.107
 %define	Version	1.2.107-2
-%define	release	%mkrel 7
+%define release:	8
 
 Name:		%{name}
 Version:	%{version}
@@ -315,15 +315,7 @@ cat > %{buildroot}%{_webappconfdir}/%{egw}-fudforum.conf <<EOF
 </Directory>
 EOF
 
-%post fudforum
-%if %mdkversion < 201010
-%_post_webapp
-%endif
 
-%postun fudforum
-%if %mdkversion < 201010
-%_postun_webapp
-%endif
 
 %clean
 rm -rf %{buildroot}
