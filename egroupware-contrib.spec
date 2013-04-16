@@ -1,28 +1,20 @@
-%define	name	egroupware-contrib
 %define	Name	eGroupWare-contrib
 %define egw	egroupware
 %define wwwdir	%{_var}/www/%{egw}
-%define	version	1.2.107
 %define	Version	1.2.107-2
-%define release:	9
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		egroupware-contrib
+Version:	1.2.107
+Release:	9
 Summary:	Contrib modules for egroupware suite
 License:	GPL+
 Group:		System/Servers
 URL:		http://www.egroupware.org/
 Source0:	%{Name}-%{Version}.tar.bz2
-%if %mdkversion < 201010
-Requires(post):   rpm-helper
-Requires(postun):   rpm-helper
-%endif
 Requires:	apache-mod_php
 Requires:	php-xml
 Requires:	php-gd
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. This -contrib 
