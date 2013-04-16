@@ -5,7 +5,7 @@
 
 Name:		egroupware-contrib
 Version:	1.2.107
-Release:	9
+Release:	10
 Summary:	Contrib modules for egroupware suite
 License:	GPL+
 Group:		System/Servers
@@ -61,7 +61,6 @@ This application display comic strips.
 %package email
 Summary:	The eGroupWare email application
 Group:		System/Servers
-Requires:	%{name}-addressbook = %{version}-%{release}
 Obsoletes:	egroupware-email
 Provides:	egroupware-email
 
@@ -154,7 +153,6 @@ This is the phpldapadmin app for eGroupWare.
 %package projects
 Summary:	The eGroupWare projects application
 Group:		System/Servers
-Requires:	%{name}-addressbook = %{version}-%{release}
 Obsoletes:	egroupware-projects
 Provides:	egroupware-projects
 
