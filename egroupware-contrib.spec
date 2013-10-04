@@ -12,6 +12,7 @@ Group:		System/Servers
 URL:		http://www.egroupware.org/
 Source0:	%{Name}-%{Version}.tar.bz2
 Requires:	apache-mod_php
+Requires:   apache-mod_socache_shmcb
 Requires:	php-xml
 Requires:	php-gd
 BuildArch:	noarch
@@ -266,27 +267,27 @@ find %{buildroot}%{wwwdir} -name '*.py' -exec chmod 755 {} \;
 install -d -m 755 %{buildroot}%{_webappconfdir}
 cat > %{buildroot}%{_webappconfdir}/%{egw}-fudforum.conf <<EOF
 <Directory /var/www/egroupware/fudforum/setup/base>
-    Deny from all
+    Require all denied
 </Directory>
 
 <Directory /var/www/egroupware/fudforum/setup/base/sql>
-    Deny from all
+    Require all denied
 </Directory>
 
 <Directory /var/www/egroupware/fudforum/setup/base/src>
-    Deny from all
+    Require all denied
 </Directory>
 
 <Directory /var/www/egroupware/fudforum/setup/base/thm>
-    Deny from all
+    Require all denied
 </Directory>
 
 <Directory /var/www/egroupware/fudforum/setup/base/cache>
-    Deny from all
+    Require all denied
 </Directory>
 
 <Directory /var/www/egroupware/fudforum/setup/base/scripts>
-    Deny from all
+    Require all denied
 </Directory>
 
 <Directory /var/www/egroupware/fudforum/setup/base/www_root>
@@ -301,7 +302,7 @@ cat > %{buildroot}%{_webappconfdir}/%{egw}-fudforum.conf <<EOF
 </Directory>
 
 <Directory /var/www/egroupware/fudforum/setup/base/include>
-    Deny from all
+    Require all denied
 </Directory>
 EOF
 
