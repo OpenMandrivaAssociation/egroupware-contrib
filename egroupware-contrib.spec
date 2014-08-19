@@ -5,7 +5,7 @@
 
 Name:		egroupware-contrib
 Version:	1.2.107
-Release:	10
+Release:	10.1
 Summary:	Contrib modules for egroupware suite
 License:	GPL+
 Group:		System/Servers
