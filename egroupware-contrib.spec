@@ -9,7 +9,7 @@ Release:	12
 Summary:	Contrib modules for egroupware suite
 License:	GPL+
 Group:		System/Servers
-URL:		http://www.egroupware.org/
+URL:		https://www.egroupware.org/
 Source0:	%{Name}-%{Version}.tar.bz2
 Requires:	apache-mod_php
 Requires:   apache-mod_socache_shmcb
